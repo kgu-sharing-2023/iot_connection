@@ -5,7 +5,7 @@ var Gpio = require('onoff').Gpio; //include onoff to interact with the GPIO
 var LED = new Gpio(4, 'out'); //use GPIO pin 4 as output
 var pushButton = new Gpio(17, 'in', 'both'); //use GPIO pin 17 as input, and 'both' button presses, and releases should be handled
 
-http.listen(8080); //listen to port 8080
+http.listen(28080); //listen to port 28080
 
 function handler (req, res) { //create server
   fs.readFile(__dirname + '/resources/web/index.html', function(err, data) { //read file index.html in public folder
@@ -26,6 +26,7 @@ io.sockets.on('connection', function (socket) {// WebSocket Connection
       console.error('There was an error', err); //output error message to console
       return;
     }
+    console.log("io switch work");
     lightvalue = value;
     socket.emit('light', lightvalue); //send button status to client
   });
