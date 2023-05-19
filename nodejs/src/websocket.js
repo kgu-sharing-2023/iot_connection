@@ -1,13 +1,77 @@
 var http = require('http').createServer(handler); //require http server, and create server with function handler()
 var fs = require('fs'); //require filesystem module
+var url = requir('url');
 var io = require('socket.io')(http) //require socket.io module and pass the http object (server)
-var Gpio = require('onoff').Gpio; //include onoff to interact with the GPIO
-var LED = new Gpio(4, 'out'); //use GPIO pin 4 as output
-var pushButton = new Gpio(17, 'in', 'both'); //use GPIO pin 17 as input, and 'both' button presses, and releases should be handled
+//var Gpio = require('onoff').Gpio; //include onoff to interact with the GPIO
+//var LED = new Gpio(4, 'out'); //use GPIO pin 4 as output
+//var pushButton = new Gpio(17, 'in', 'both'); //use GPIO pin 17 as input, and 'both' button presses, and releases should be handled
 
+//http.on('listening');
 http.listen(28080); //listen to port 28080
 
 function handler (req, res) { //create server
+  if (req.method === 'GET') {
+    if (req.url == '/') {
+      fs.readFile(__dirname + '/resources/web/menu.html', function(err, data) { //read file index.html in public folder
+        if (err) {
+          res.writeHead(404, {'Content-Type': 'text/html'}); //display 404 on error
+          return res.end("404 Not Found");
+        }
+        res.writeHead(200, {'Content-Type': 'text/html'}); //write HTML
+        res.write(data); //write data from index.html
+        return res.end();
+      });
+    }
+
+    else if (req.url == '/gen') {
+      fs.readFile(__dirname + '/resources/web/makingPin.html', function(err, data) {
+        if (err) {
+          res.writeHead(404, {'Content-Type': 'text/html'});
+          return res.end("404 Not Found");
+        }
+        res.writeHead(200, {'Content-Type': 'text/html'});
+        res.write(data);
+        return res.end();
+      });
+    }
+
+    else if (req.url == '/comp') {
+      fs.readFile(__dirname + '/resources/web/typingPin.html', function(err, data) {
+        if (err) {
+          res.writeHead(404, {'Content-Type': 'text/html'});
+          return res.end("404 Not Found");
+        }
+        res.writeHead(200, {'Content-Type': 'text/html'});
+        res.write(data);
+        return res.end();
+      });
+    }
+
+    else if (req.url == '/switch') {
+      fs.readFile(__dirname + '/resources/web/index.html', function(err, data) {
+        if (err) {
+          res.writeHead(404, {'Content-Type': 'text/html'});
+          return res.end("404 Not Found");
+        }
+        res.writeHead(200, {'Content-Type': 'text/html'});
+        res.write(data);
+        return res.end();
+      });
+    }
+  }
+
+  else if (req.method === 'POST') {
+    if (req.url == '/gen') {
+      let pin = '';
+    }
+
+    else if (req.url == '/comp') {
+      
+    }
+  }
+}
+
+/*function handler (req, res) { //create server
   fs.readFile(__dirname + '/resources/web/index.html', function(err, data) { //read file index.html in public folder
     if (err) {
       res.writeHead(404, {'Content-Type': 'text/html'}); //display 404 on error
@@ -43,4 +107,4 @@ process.on('SIGINT', function () { //on ctrl+c
   LED.unexport(); // Unexport LED GPIO to free resources
   pushButton.unexport(); // Unexport Button GPIO to free resources
   process.exit(); //exit completely
-});
+});*/
