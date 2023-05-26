@@ -13,6 +13,6 @@ picam.start()
 
 while True:
     time.sleep(60)
-    picam.capture_file("/mnt/dsm/temp/test-python-%s.jpg" % time.time())
+    picam.capture_file("/mnt/dsm/temp/_cctv/test-python-%s.jpg" % time.time())
 
 picam.close()
