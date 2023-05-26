@@ -1,18 +1,21 @@
 import time
-from picamera2 import Picamera2, Preview
+from picamera2 import Picamera2
 
 picam = Picamera2()
 
-config = picam.create_preview_configuration()
-config.resolution = (640, 480)
-config.framerate = 15
+picam.resolution = (640, 480)
+picam.framerate = 15
 
-picam.configure(config)
-
-picam.start()
+picam.start_recording("/mnt/dsm/temp/test-python-%s.mkv" % time.time(), format="h264")
 
 while True:
+    # 60초마다 영상을 끊고 파일을 저장하는 반복문
     time.sleep(60)
-    picam.capture_file("/mnt/dsm/temp/_cctv/test-python-%s.jpg" % time.time())
+
+    picam.stop_recording()
+
+    picam.start_recording("/mnt/dsm/temp/test-python-%s.mkv" % time.time(), format="h264")
+
+picam.stop_recording()
 
 picam.close()
