@@ -110,6 +110,7 @@ function handler (req, res) { //create server
             writeJSONToFile(jsonData, cabinet);
             res.statusCode = 200;
             res.end('JSON data has been written to the file.');
+            LED.writeSync(0); //잠금 설정
           } catch (error) {
             res.statusCode = 400;
             res.end('Invalid JSON data.');
@@ -138,6 +139,7 @@ function handler (req, res) { //create server
                   console.log(`File '${jsonData.cabinet}' renamed to '${jsonData.cabinet+"__"+jsonData.postid}' successfully.`);
                 }
               });
+              LED.writeSync(1); //잠금 해제 
               res.statusCode = 200;
               res.end('Authentication successful.');
             } else {
