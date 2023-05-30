@@ -2,8 +2,8 @@ var http = require('http').createServer(handler); //require http server, and cre
 var fs = require('fs'); //require filesystem module
 var url = require('url');
 
-var Gpio = require('onoff').Gpio; //include onoff to interact with the GPIO
-var LED = new Gpio(5, 'out'); //use GPIO pin 4 as output
+// var Gpio = require('onoff').Gpio; //include onoff to interact with the GPIO
+// var LED = new Gpio(5, 'out'); //use GPIO pin 4 as output
 var pushButton = new Gpio(17, 'in', 'both'); //use GPIO pin 17 as input, and 'both' button presses, and releases should be handled
 
 http.listen(28080); //listen to port 28080
@@ -60,7 +60,7 @@ function handler (req, res) { //create server
 
     else if (req.url == '/on') {
       fs.readFile(__dirname + '/resources/web/gpio.html', function(err, data){
-      LED.writeSync(1); //set pin state to 1 (turn LED on);
+      // LED.writeSync(1); //set pin state to 1 (turn LED on);
       res.writeHead(200, {'Content-Type': 'text/html'});
       console.log("led on");
       return res.end();
@@ -70,7 +70,7 @@ function handler (req, res) { //create server
 
     else if (req.url == '/off') {
       fs.readFile(__dirname + '/resources/web/gpio.html', function(err, data){
-      LED.writeSync(0); //set pin state to 1 (turn LED on);
+      // LED.writeSync(0); //set pin state to 1 (turn LED on);
       res.writeHead(200, {'Content-Type': 'text/html'});
       console.log("led off");
       return res.end();
@@ -110,7 +110,7 @@ function handler (req, res) { //create server
             writeJSONToFile(jsonData, cabinet);
             res.statusCode = 200;
             res.end('JSON data has been written to the file.');
-            LED.writeSync(0); //잠금 설정
+            // LED.writeSync(0); //잠금 설정
           } catch (error) {
             res.statusCode = 400;
             res.end('Invalid JSON data.');
@@ -139,7 +139,7 @@ function handler (req, res) { //create server
                   console.log(`File '${jsonData.cabinet}' renamed to '${jsonData.cabinet+"__"+jsonData.postid}' successfully.`);
                 }
               });
-              LED.writeSync(1); //잠금 해제 
+              // LED.writeSync(1); //잠금 해제 
               res.statusCode = 200;
               res.end('Authentication successful.');
             } else {
