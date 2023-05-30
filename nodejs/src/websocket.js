@@ -81,14 +81,46 @@ function handler (req, res) { //create server
   }
 
   else if (req.method === 'POST') {
-    if (req.url == '/gen') {
-      let pin = '';
+    if (req.url == '/pininput') {
+      let body = '';
+        req.on('data', (chunk) => {
+          body += chunk;
+        });
+
+        req.on('end', () => {
+          try {
+            const jsonData = JSON.parse(body);
+            writeJSONToFile(jsonData);
+            res.statusCode = 200;
+            res.end('JSON data has been written to the file.');
+          } catch (error) {
+            res.statusCode = 400;
+            res.end('Invalid JSON data.');
+          }
+        });
+      } else {
+        res.statusCode = 404;
+        res.end('Not Found');
+
     }
 
     
   
   }
 }
+
+function writeJSONToFile(jsonData) {
+  const filename = 'output.json';
+
+  fs.writeFile(filename, JSON.stringify(jsonData, null, 2), (err) => {
+    if (err) {
+      console.error('Error writing JSON to file:', err);
+    } else {
+      console.log(`JSON data has been written to ${filename}`);
+    }
+  });
+}
+
 
 // function handler (req, res) { //create server
 //   fs.readFile(__dirname + '/resources/web/menu.html', function(err, data) { //read file index.html in public folder
