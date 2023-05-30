@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>메뉴 선택</title>
+</head>
+<body>
+    <h1>Pin setting</h1>
+    <form id="jsonFormSetting" action="/pin/setting" method="POST">
+      <label for="postid">Post ID:</label>
+      <input type="text" id="postidSetting" name="postid" required><br><br>
+  
+      <label for="pin">Pin:</label>
+      <input type="text" id="pinSetting" name="pin" required><br><br>
+  
+      <button type="button" onclick="submitJsonFormSetting()">Submit</button>
+    </form>
+  
+    <script>
+      function submitJsonFormSetting() {
+        const postid = document.getElementById('postidSetting').value;
+        const pin = document.getElementById('pinSetting').value;
+  
+        const jsonData = {
+          postid: postid,
+          pin: pin
+        };
+  
+        const jsonInput = document.createElement('input');
+        jsonInput.type = 'hidden';
+        jsonInput.name = 'jsondata';
+        jsonInput.value = JSON.stringify(jsonData);
+  
+        const form = document.getElementById('jsonFormSetting');
+        form.appendChild(jsonInput);
+        form.submit();
+      }
+    </script>
+
+    <h1>Pin auth</h1>
+    <form id="jsonFormAuth" action="/pin/auth" method="POST">
+      <label for="postid">Post ID:</label>
+      <input type="text" id="postidAuth" name="postid" required><br><br>
+  
+      <label for="pin">Pin:</label>
+      <input type="text" id="pinAuth" name="pin" required><br><br>
+  
+      <button type="button" onclick="submitJsonFormAuth()">Submit</button>
+    </form>
+  
+    <script>
+      function submitJsonFormAuth() {
+        const postid = document.getElementById('postidAuth').value;
+        const pin = document.getElementById('pinAuth').value;
+  
+        const jsonData = {
+          postid: postid,
+          pin: pin
+        };
+  
+        const jsonInput = document.createElement('input');
+        jsonInput.type = 'hidden';
+        jsonInput.name = 'jsondata';
+        jsonInput.value = JSON.stringify(jsonData);
+  
+        const form = document.getElementById('jsonFormAuth');
+        form.appendChild(jsonInput);
+        form.submit();
+      }
+    </script>
+</body>
+  </html>
