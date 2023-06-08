@@ -24,11 +24,11 @@ while True:
     encoder = H264Encoder(10000000)
     output = FfmpegOutput(filename)
 
-    # 60초마다 영상을 끊고 파일을 저장하는 반복문
+    # 5초 영상을 끊고 파일을 저장하는 반복문
     
 
     picam2.start_recording(encoder, output )
-    time.sleep(15)
+    time.sleep(5)
 
     picam2.stop_recording()
     print("recorded once" + filename )
