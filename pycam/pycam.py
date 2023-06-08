@@ -9,16 +9,17 @@ import shutil
 # Set the desired working directory
 print(os.getcwd())
 working_directory = "/home/kgu4624/Documents/nodegpio/webdav"
-dst = "/mnt/dsm/temp/_cctv/"
+dst = "/mnt/dsm/rasberry/temp/_cctv/"
 os.chdir(working_directory)
-
 picam2 = Picamera2()
 
-config = picam2.create_video_configuration(main={"size": (640, 480)})
-picam2.configure(config)
-
-
 while True:
+    time.sleep(2)
+
+
+    config = picam2.create_video_configuration(main={"size": (640, 480)})
+    picam2.configure(config)
+
     current_time = datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
     filename = "test-python-{}.mp4".format(current_time)
     encoder = H264Encoder(10000000)
@@ -33,8 +34,6 @@ while True:
     picam2.stop_recording()
     print("recorded once" + filename )
     
-    shutil.move(working_directory + "/" + filename, dst)
-
 picam.stop_recording()
 
 picam.close()
